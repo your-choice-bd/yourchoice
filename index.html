@@ -1,255 +1,514 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YourChoice - Premium Fashion Store</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YourChoice — যা চাই, তাই এখানে</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141221;
+    --violet:#6C4AB6;
+    --violet-deep:#4B3184;
+    --lime:#C6F135;
+    --coral:#FF6F59;
+    --paper:#FBF9F6;
+    --paper-dim:#EFEAE0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Hind Siliguri',sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Baloo Da 2',sans-serif;font-weight:700;}
+  a{text-decoration:none;color:inherit;}
+  img,svg{display:block;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
 
-  <link rel="stylesheet" href="style.css">
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
 
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:80;
+    background:rgba(251,249,246,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--paper-dim);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1100px;margin:0 auto;}
+  .logo{font-size:1.55rem;color:var(--ink);display:flex;align-items:center;gap:6px;}
+  .logo .dot{width:9px;height:9px;background:var(--lime);border-radius:50%;display:inline-block;animation:pulse 2s infinite;}
+  .nav-links{display:flex;gap:30px;font-weight:600;font-size:0.95rem;}
+  .nav-links a{position:relative;padding-bottom:3px;}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--coral);transition:width .25s;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--ink);color:var(--paper);
+    padding:11px 24px;border-radius:100px;font-weight:700;font-size:0.9rem;
+    transition:transform .2s, background .2s;
+  }
+  .nav-cta:hover{background:var(--coral);transform:translateY(-2px);}
+
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(198,241,53,0.6);}50%{box-shadow:0 0 0 6px rgba(198,241,53,0);}}
+
+  /* HERO */
+  .hero{position:relative;padding:110px 24px 100px;overflow:hidden;}
+  .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.55;z-index:0;animation:float 9s ease-in-out infinite;}
+  .blob1{width:380px;height:380px;background:var(--violet);top:-140px;right:-100px;animation-delay:0s;}
+  .blob2{width:280px;height:280px;background:var(--lime);bottom:-100px;left:-80px;opacity:0.4;animation-delay:2s;}
+  .blob3{width:200px;height:200px;background:var(--coral);top:40%;right:10%;opacity:0.3;animation-delay:4s;}
+  @keyframes float{0%,100%{transform:translateY(0) translateX(0);}50%{transform:translateY(-25px) translateX(15px);}}
+
+  .hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;text-align:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--ink);color:var(--lime);
+    padding:8px 18px;border-radius:100px;font-weight:700;font-size:0.82rem;margin-bottom:28px;
+    animation:fadeUp .8s ease both;
+  }
+  .hero h1{
+    font-size:clamp(2.5rem,7vw,4.6rem);line-height:1.18;margin-bottom:22px;letter-spacing:-0.5px;
+    animation:fadeUp .8s ease .1s both;
+  }
+  .hero h1 .hl{
+    background:linear-gradient(90deg,var(--violet),var(--coral) 60%,var(--lime));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    background-size:200% auto;
+    animation:sheen 5s linear infinite;
+  }
+  @keyframes sheen{0%{background-position:0% center;}100%{background-position:200% center;}}
+  .hero p{
+    max-width:46ch;margin:0 auto 38px;color:#4a4560;font-size:1.15rem;
+    animation:fadeUp .8s ease .2s both;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:56px;animation:fadeUp .8s ease .3s both;}
+
+  /* hero visual — stacked look cards + spinning badge */
+  .hero-visual{position:relative;width:300px;height:270px;margin:36px auto 0;z-index:2;}
+  .look-wrap{position:absolute;width:140px;height:180px;}
+  .lc1{left:2px;top:44px;transform:rotate(-11deg);}
+  .lc2{left:50%;top:0;transform:translateX(-50%) rotate(2deg);z-index:3;}
+  .lc3{right:2px;top:44px;transform:rotate(11deg);}
+  .look-card{
+    width:100%;height:100%;border-radius:24px;color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    box-shadow:0 22px 40px rgba(20,18,33,0.28);
+    animation:cardfloat 6.5s ease-in-out infinite;
+  }
+  .look-card svg{width:50px;height:50px;}
+  .look-card span{font-family:'Baloo Da 2';font-weight:700;font-size:0.9rem;}
+  .lc1 .look-card{background:linear-gradient(160deg,var(--violet),#8B6FD9);animation-delay:0s;}
+  .lc2 .look-card{background:linear-gradient(160deg,var(--coral),#FF9B7F);animation-delay:.7s;}
+  .lc3 .look-card{background:linear-gradient(160deg,#2F8F6E,#5FBF9B);animation-delay:1.4s;}
+  @keyframes cardfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+  .spin-badge{position:absolute;top:-26px;right:-6px;width:92px;height:92px;z-index:4;}
+  .spin-badge svg{width:100%;height:100%;animation:spin 14s linear infinite;}
+  .spin-badge .center-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;background:var(--lime);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 6px 14px rgba(0,0,0,0.2);}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  @media (max-width:700px){.hero-visual{width:250px;height:230px;transform:scale(0.9);}
+    .look-wrap{width:115px;height:150px;}
+    .look-card svg{width:40px;height:40px;} .look-card span{font-size:0.78rem;}}
+
+  /* clickable item chips inside category cards */
+  .item-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 24px 26px;}
+  .item-chip{
+    background:rgba(251,249,246,0.06);border:1px solid rgba(251,249,246,0.15);
+    border-radius:14px;padding:14px 6px;text-align:center;cursor:pointer;
+    transition:transform .2s ease, border-color .2s, background .2s;
+  }
+  .item-chip:hover, .item-chip:focus-visible{transform:translateY(-5px);border-color:var(--lime);background:rgba(198,241,53,0.1);}
+  .item-chip svg{width:24px;height:24px;margin:0 auto 6px;}
+  .item-chip img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;margin-bottom:6px;display:block;}
+  .item-chip span{font-size:0.78rem;color:var(--paper);display:block;}
+
+  /* modal */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(20,18,33,0.72);backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;z-index:300;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;padding:20px;
+  }
+  .modal-overlay.open{opacity:1;pointer-events:auto;}
+  .modal-card{
+    background:#fff;border-radius:26px;max-width:360px;width:100%;padding:38px 30px;text-align:center;
+    transform:scale(0.9) translateY(10px);transition:transform .3s ease;position:relative;
+  }
+  .modal-card.photo{max-width:400px;padding:26px 26px 32px;}
+  .modal-overlay.open .modal-card{transform:scale(1) translateY(0);}
+  .modal-visual{width:110px;height:110px;border-radius:50%;margin:0 auto 22px;display:flex;align-items:center;justify-content:center;}
+  .modal-visual svg{width:54px;height:54px;}
+  .modal-visual.photo{width:100%;height:340px;border-radius:18px;overflow:hidden;background:var(--paper-dim);}
+  .modal-visual.photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .modal-card h3{font-size:1.35rem;margin-bottom:6px;}
+  .modal-card .modal-cat{color:var(--coral);font-weight:700;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;display:block;}
+  .modal-card p{color:#5c5770;font-size:0.9rem;margin-bottom:26px;}
+  .modal-close{
+    position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;
+    background:var(--paper-dim);border:none;font-size:1.1rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;color:var(--ink);
+  }
+  .modal-close:hover{background:var(--coral);color:#fff;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:15px 32px;border-radius:100px;font-weight:700;font-size:1rem;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(20,18,33,0.25);}
+  .btn-outline{border:2px solid var(--ink);color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:var(--paper);transform:translateY(-3px);}
+
+  /* marquee strip */
+  .marquee-strip{background:var(--ink);padding:14px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:2;}
+  .marquee-track{display:inline-flex;gap:40px;animation:scroll 18s linear infinite;}
+  .marquee-track span{color:var(--paper);font-weight:700;font-size:0.95rem;display:flex;align-items:center;gap:10px;}
+  .marquee-track span::after{content:"✦";color:var(--lime);}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* FEATURES */
+  section{padding:90px 0;}
+  .section-head{max-width:60ch;margin:0 auto 52px;text-align:center;}
+  .section-eyebrow{color:var(--coral);font-weight:700;font-size:0.85rem;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase;}
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.5rem);}
+
+  .features{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .feature{
+    background:#fff;border:1px solid var(--paper-dim);border-radius:20px;
+    padding:30px 22px;text-align:center;transition:transform .3s, box-shadow .3s;
+  }
+  .feature:hover{transform:translateY(-8px);box-shadow:0 16px 32px rgba(20,18,33,0.08);}
+  .feature .icon{width:52px;height:52px;margin:0 auto 16px;}
+  .feature h3{font-size:1.05rem;margin-bottom:8px;}
+  .feature p{font-size:0.88rem;color:#5c5770;}
+
+  /* PRODUCTS */
+  .products-bg{background:var(--ink);color:var(--paper);}
+  .products-bg .section-eyebrow{color:var(--lime);}
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .product-card{
+    background:rgba(251,249,246,0.05);border:1px solid rgba(251,249,246,0.12);
+    border-radius:22px;padding:0;overflow:hidden;
+    transition:transform .35s ease, border-color .35s;
+  }
+  .product-card:hover{transform:translateY(-10px) rotate(-0.5deg);border-color:var(--lime);}
+  .product-visual{
+    height:180px;display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .product-visual svg{width:100px;height:100px;position:relative;z-index:2;transition:transform .4s;}
+  .product-card:hover .product-visual svg{transform:scale(1.12) rotate(4deg);}
+  .pv1{background:linear-gradient(135deg,var(--violet),#8B6FD9);}
+  .pv2{background:linear-gradient(135deg,var(--coral),#FF9B7F);}
+  .pv3{background:linear-gradient(135deg,#2F8F6E,#5FBF9B);}
+  .product-body{padding:24px;}
+  .product-tag{color:var(--lime);font-weight:700;font-size:0.78rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;display:block;}
+  .product-card h3{font-size:1.25rem;margin-bottom:8px;}
+  .product-card p{color:#c9c5da;font-size:0.9rem;}
+
+  /* TESTIMONIAL */
+  .testimonial{background:var(--paper-dim);text-align:center;}
+  .testimonial-inner{max-width:680px;margin:0 auto;}
+  .stars{color:var(--coral);font-size:1.3rem;margin-bottom:20px;letter-spacing:4px;}
+  .testimonial blockquote{font-family:'Baloo Da 2';font-weight:600;font-size:1.4rem;line-height:1.6;margin-bottom:20px;}
+  .testimonial cite{font-style:normal;font-weight:700;color:var(--violet-deep);}
+
+  /* CONTACT */
+  .contact-box{
+    background:linear-gradient(120deg,var(--violet),var(--violet-deep));
+    color:var(--paper);border-radius:28px;padding:60px 44px;
+    display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;
+    position:relative;overflow:hidden;
+  }
+  .contact-box .ring{position:absolute;border:2px solid rgba(198,241,53,0.3);border-radius:50%;}
+  .contact-box .ring1{width:220px;height:220px;top:-80px;right:-60px;}
+  .contact-box .ring2{width:120px;height:120px;bottom:-40px;right:120px;border-color:rgba(255,111,89,0.3);}
+  .contact-box h2{font-size:1.9rem;margin-bottom:10px;position:relative;z-index:2;}
+  .contact-box p{color:#E2DCF5;position:relative;z-index:2;}
+  .contact-actions{position:relative;z-index:2;display:flex;gap:14px;flex-wrap:wrap;}
+  .contact-box .btn-primary{background:var(--lime);color:var(--ink);}
+  .contact-box .btn-outline{border-color:var(--paper);color:var(--paper);}
+  .contact-box .btn-outline:hover{background:var(--paper);color:var(--violet-deep);}
+
+  footer{padding:44px 24px;text-align:center;color:#8b8598;font-size:0.88rem;}
+  footer .logo{justify-content:center;margin-bottom:10px;}
+
+  /* floating whatsapp button */
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;z-index:100;
+    width:60px;height:60px;background:#25D366;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(37,211,102,0.4);
+    animation:wa-pulse 2.4s infinite;
+  }
+  .wa-float svg{width:30px;height:30px;}
+  @keyframes wa-pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5);}70%{box-shadow:0 0 0 16px rgba(37,211,102,0);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+
+  @media (max-width:900px){
+    .features{grid-template-columns:repeat(2,1fr);}
+    .product-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .contact-box{flex-direction:column;align-items:flex-start;text-align:left;padding:44px 28px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .blob,.marquee-track,.wa-float,.eyebrow,.hero h1,.hero p,.hero-actions{animation:none;}
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+  :focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+</style>
 </head>
-
 <body>
 
-<!-- Top Bar -->
-<div class="top-bar">
-    <span>🚚 Free Delivery Over ৳1000</span>
-    <span>📞 01317316865</span>
-</div>
-
-<!-- Header -->
 <header>
-
-<div class="logo">
-    <h1>YourChoice</h1>
-    <p>Style That Defines You</p>
-</div>
-
-<div class="icons">
-    <i class="fas fa-search"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-shopping-cart"></i>
-</div>
-
+  <nav>
+    <a href="#" class="logo"><span class="dot"></span>YourChoice</a>
+    <div class="nav-links">
+      <a href="#features">কেন আমরা</a>
+      <a href="#products">পণ্য</a>
+      <a href="#reviews">রিভিউ</a>
+      <a href="#contact">যোগাযোগ</a>
+    </div>
+    <a href="https://wa.me/8801317316865" class="nav-cta">অর্ডার করুন</a>
+  </nav>
 </header>
 
 <section class="hero">
-
-<img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200" alt="Fashion Banner">
-
-<div class="hero-text">
-<h1>New Fashion Collection 2026</h1>
-<p>Premium Quality • Best Price • Fast Delivery</p>
-<a href="#products"><button>🛍 Shop Now</button></a>
-</div>
-
-<section class="slider">
-
-  <div class="slides fade">
-    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">🔥 নতুন ফ্যাশন কালেকশন এসেছে</div>
+    <h1>স্টাইল যেখানে, <span class="hl">YourChoice সেখানে</span></h1>
+    <p>ছেলে, মেয়ে ও বাচ্চাদের জন্য সবচেয়ে স্টাইলিশ পোশাক — মান আর দামে সেরা। ঘরে বসেই অর্ডার করুন, দ্রুত ডেলিভারি পান সারাদেশে।</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn btn-primary">কালেকশন দেখুন</a>
+      <a href="https://wa.me/8801317316865" class="btn btn-outline">হোয়াটসঅ্যাপে অর্ডার</a>
+    </div>
+    <div class="hero-visual">
+      <div class="spin-badge">
+        <svg viewBox="0 0 100 100">
+          <defs><path id="badgepath" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+          <text font-size="9" font-weight="700" fill="#141221" letter-spacing="1.5">
+            <textPath href="#badgepath">নতুন কালেকশন • YourChoice • নতুন কালেকশন • YourChoice •</textPath>
+          </text>
+        </svg>
+        <div class="center-dot">✦</div>
+      </div>
+      <div class="look-wrap lc1"><div class="look-card">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M16 8l8 6 8-6 6 6-6 6v22H14V20l-6-6 8-6z" fill="#fff"/></svg>
+        <span>ছেলেদের</span>
+      </div></div>
+      <div class="look-wrap lc2"><div class="look-card">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M18 6h12l3 10-5 2 4 24H14l4-24-5-2z" fill="#fff"/></svg>
+        <span>মেয়েদের</span>
+      </div></div>
+      <div class="look-wrap lc3"><div class="look-card">
+        <svg viewBox="0 0 48 48" fill="none"><path d="M18 10l6 4 6-4 4 5-4 4v16H18V19l-4-4 4-5z" fill="#fff"/></svg>
+        <span>বাচ্চাদের</span>
+      </div></div>
+    </div>
   </div>
+</section>
 
-  <div class="slides fade">
-    <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1200">
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>নতুন কালেকশন</span><span>ছেলেদের ফ্যাশন</span><span>মেয়েদের ফ্যাশন</span><span>বাচ্চাদের পোশাক</span><span>ফ্রি ডেলিভারি</span>
+    <span>নতুন কালেকশন</span><span>ছেলেদের ফ্যাশন</span><span>মেয়েদের ফ্যাশন</span><span>বাচ্চাদের পোশাক</span><span>ফ্রি ডেলিভারি</span>
   </div>
+</div>
 
-  <div class="slides fade">
-    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200">
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">কেন YourChoice</div>
+      <h2>শপিং হবে সহজ, দ্রুত আর নির্ভরযোগ্য</h2>
+    </div>
+    <div class="features">
+      <div class="feature reveal">
+        <svg class="icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="#F1ECFB"/><path d="M14 20h20l-2 14H16l-2-14z" stroke="#6C4AB6" stroke-width="2.5" stroke-linejoin="round"/><path d="M18 20v-4a6 6 0 0112 0v4" stroke="#6C4AB6" stroke-width="2.5"/></svg>
+        <h3>ভেরিফায়েড পণ্য</h3>
+        <p>প্রতিটি পণ্য মান যাচাই করে তারপর পাঠানো হয়।</p>
+      </div>
+      <div class="feature reveal">
+        <svg class="icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="#FFEDE9"/><path d="M8 26h22l6-8h4v8" stroke="#FF6F59" stroke-width="2.5" stroke-linejoin="round"/><circle cx="16" cy="32" r="3" stroke="#FF6F59" stroke-width="2.5"/><circle cx="32" cy="32" r="3" stroke="#FF6F59" stroke-width="2.5"/></svg>
+        <h3>দ্রুত ডেলিভারি</h3>
+        <p>ঢাকায় ২৪ ঘণ্টা, দেশের যেকোনো প্রান্তে ৩ দিনের মধ্যে।</p>
+      </div>
+      <div class="feature reveal">
+        <svg class="icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="#EAF7EE"/><path d="M24 10l4 8 9 1-6.5 6.5L32 34l-8-4.5L16 34l1.5-8.5L11 19l9-1 4-8z" stroke="#2F8F6E" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <h3>সেরা মূল্য</h3>
+        <p>সরাসরি সাপ্লাই চেইন থেকে, তাই দাম থাকে সবসময় প্রতিযোগিতামূলক।</p>
+      </div>
+      <div class="feature reveal">
+        <svg class="icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="#FFF6E0"/><path d="M14 16h20v20H14z" stroke="#D9A441" stroke-width="2.5" stroke-linejoin="round"/><path d="M14 24l10-8 10 8" stroke="#D9A441" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <h3>সহজ রিটার্ন</h3>
+        <p>পছন্দ না হলে ৭ দিনের মধ্যে বিনামূল্যে রিটার্নের সুযোগ।</p>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="dots">
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
+<section id="products" class="products-bg">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">আমাদের কালেকশন</div>
+      <h2>সবার জন্য স্টাইলিশ পোশাক, এক ঠিকানায়</h2>
+    </div>
+    <div class="product-grid">
+      <div class="product-card reveal">
+        <div class="product-visual pv1" style="background-image:linear-gradient(rgba(108,74,182,0.55),rgba(108,74,182,0.75)), url('images/shirt-1.jpg');background-size:cover;background-position:center top;">
+        </div>
+        <div class="product-body">
+          <span class="product-tag">পুরুষ</span>
+          <h3>ছেলেদের পোশাক</h3>
+          <p>একটি আইটেমে ক্লিক করে বিস্তারিত দেখুন</p>
+        </div>
+        <div class="item-grid">
+          <div class="item-chip" tabindex="0" onclick="openModal('men','ক্যাজুয়াল শার্ট','images/shirt-1.jpg')"><img src="images/shirt-1.jpg" alt="শার্ট"><span>শার্ট</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('men','প্রিন্টেড টি-শার্ট','images/tshirt-1.jpg')"><img src="images/tshirt-1.jpg" alt="টি-শার্ট"><span>টি-শার্ট</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('men','সাদা এমব্রয়ডারি পাঞ্জাবি','images/panjabi-1.jpg')"><img src="images/panjabi-1.jpg" alt="পাঞ্জাবি"><span>পাঞ্জাবি ১</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('men','গ্রে প্রিন্ট পাঞ্জাবি','images/panjabi-2.jpg')"><img src="images/panjabi-2.jpg" alt="পাঞ্জাবি"><span>পাঞ্জাবি ২</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('men','মেরুন লেইস পাঞ্জাবি','images/panjabi-3.jpg')"><img src="images/panjabi-3.jpg" alt="পাঞ্জাবি"><span>পাঞ্জাবি ৩</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('men','চিনো প্যান্ট (ভাঁজ করা)','images/pant-1.jpg')"><img src="images/pant-1.jpg" alt="প্যান্ট"><span>প্যান্ট ১</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('men','চিনো প্যান্ট','images/pant-2.jpg')"><img src="images/pant-2.jpg" alt="প্যান্ট"><span>প্যান্ট ২</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('men','স্লিম ফিট প্যান্ট','images/pant-3.jpg')"><img src="images/pant-3.jpg" alt="প্যান্ট"><span>প্যান্ট ৩</span></div>
+        </div>
+      </div>
+      <div class="product-card reveal">
+        <div class="product-visual pv2">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M38 12h24l6 20-10 4 8 48H34l8-48-10-4 6-20z" fill="#fff" opacity="0.95"/></svg>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">নারী</span>
+          <h3>মেয়েদের পোশাক</h3>
+          <p>একটি আইটেমে ক্লিক করে বিস্তারিত দেখুন</p>
+        </div>
+        <div class="item-grid">
+          <div class="item-chip" tabindex="0" onclick="openModal('women','থ্রি-পিস')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M9 3h6l1.5 5-2.5 1 2 12H8l2-12-2.5-1L9 3z"/></svg><span>থ্রি-পিস</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('women','শাড়ি')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M9 3h6l1.5 5-2.5 1 2 12H8l2-12-2.5-1L9 3z"/></svg><span>শাড়ি</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('women','কুর্তি')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M9 3h6l1.5 5-2.5 1 2 12H8l2-12-2.5-1L9 3z"/></svg><span>কুর্তি</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('women','ওয়েস্টার্ন টপ')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M9 3h6l1.5 5-2.5 1 2 12H8l2-12-2.5-1L9 3z"/></svg><span>ওয়েস্টার্ন টপ</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('women','লেগিংস')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M7 3h10l1 5-2 1 1 12h-5l-1-9-1 9H5L6 9l-2-1 3-5z"/></svg><span>লেগিংস</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('women','ওড়না')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M9 3h6l1.5 5-2.5 1 2 12H8l2-12-2.5-1L9 3z"/></svg><span>ওড়না</span></div>
+        </div>
+      </div>
+      <div class="product-card reveal">
+        <div class="product-visual pv3">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M36 20l14 9 14-9 9 11-9 8v34H36V48l-9-8 9-11z" fill="#fff" opacity="0.95"/></svg>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">শিশু</span>
+          <h3>বাচ্চাদের পোশাক</h3>
+          <p>একটি আইটেমে ক্লিক করে বিস্তারিত দেখুন</p>
+        </div>
+        <div class="item-grid">
+          <div class="item-chip" tabindex="0" onclick="openModal('kids','বেবি সেট')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M8 4l4 3 4-3 3 3-3 3v11H5V10L2 7l3-3z"/></svg><span>বেবি সেট</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('kids','টি-শার্ট')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M8 4l4 3 4-3 3 3-3 3v11H5V10L2 7l3-3z"/></svg><span>টি-শার্ট</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('kids','ফ্রক')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M9 3h6l1.5 5-2.5 1 2 12H8l2-12-2.5-1L9 3z"/></svg><span>ফ্রক</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('kids','শর্টস')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M7 3h10l1 5-2 1 1 12h-5l-1-9-1 9H5L6 9l-2-1 3-5z"/></svg><span>শর্টস</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('kids','জ্যাকেট')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M8 4l4 3 4-3 3 3-3 3v11H5V10L2 7l3-3z"/></svg><span>জ্যাকেট</span></div>
+          <div class="item-chip" tabindex="0" onclick="openModal('kids','নাইট ড্রেস')"><svg viewBox="0 0 24 24" fill="none" stroke="#C6F135" stroke-width="1.8"><path d="M9 3h6l1.5 5-2.5 1 2 12H8l2-12-2.5-1L9 3z"/></svg><span>নাইট ড্রেস</span></div>
+        </div>
+      </div>
+    </div>
   </div>
-
 </section>
 
-
-<!-- Banner -->
-
-<section class="banner">
-
-<div class="banner-text">
-
-<h2>NEW COLLECTION</h2>
-
-<h1>Premium Fashion</h1>
-
-<p>Best Quality | Best Price</p>
-
-<a href="#" class="btn">SHOP NOW</a>
-
-</div>
-
+<section id="reviews" class="testimonial">
+  <div class="wrap">
+    <div class="testimonial-inner reveal">
+      <div class="stars">★★★★★</div>
+      <blockquote>"কাপড়ের কোয়ালিটি আর ফিটিং দুটোই দারুণ, ছবির সাথে হুবহু মিলেছে। YourChoice থেকে পরিবারের সবার জন্যই অর্ডার করি এখন।"</blockquote>
+      <cite>— সাদিয়া ইসলাম, গ্রাহক</cite>
+    </div>
+  </div>
 </section>
 
-<!-- Categories -->
-
-<section class="categories">
-
-<h2>Shop By Category</h2>
-
-<div class="category-box">
-
-<div class="cat">
-👕
-<p>Men</p>
-</div>
-
-<div class="cat">
-👗
-<p>Women</p>
-</div>
-
-<div class="cat">
-👶
-<p>Kids</p>
-</div>
-
-<div class="cat">
-👜
-<p>Bags</p>
-</div>
-
-<div class="cat">
-👟
-<p>Shoes</p>
-</div>
-
-<div class="cat">
-⌚
-<p>Accessories</p>
-</div>
-
-</div>
-
-</section>
-<!-- New Arrivals -->
-
-<section class="products">
-
-<h2>🔥 New Arrivals</h2>
-
-<div class="product-grid">
-
-<div class="product">
-<img src="https://picsum.photos/300/350?random=1" alt="Product">
-<h3>Premium T-Shirt</h3>
-<p>৳650</p>
-<button>🛒 Add to Cart</button>
-</div>
-
-<div class="product">
-<img src="https://picsum.photos/300/350?random=2" alt="Product">
-<h3>Casual Shirt</h3>
-<p>৳1150</p>
-<button>🛒 Add to Cart</button>
-</div>
-
-<div class="product">
-<img src="https://picsum.photos/300/350?random=3" alt="Product">
-<h3>Women's Kurti</h3>
-<p>৳1200</p>
-<button>🛒 Add to Cart</button>
-</div>
-
-<div class="product">
-<img src="https://picsum.photos/300/350?random=4" alt="Product">
-<h3>Kids Fashion</h3>
-<p>৳850</p>
-<button>🛒 Add to Cart</button>
-</div>
-
-</div>
-
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box reveal">
+      <div class="ring ring1"></div>
+      <div class="ring ring2"></div>
+      <div>
+        <h2>এখনই অর্ডার করুন YourChoice থেকে</h2>
+        <p>হোয়াটসঅ্যাপে মেসেজ দিন, আমরা সাহায্য করব পছন্দের পণ্য বেছে নিতে।</p>
+      </div>
+      <div class="contact-actions">
+        <a href="https://wa.me/8801317316865" class="btn btn-primary">📱 হোয়াটসঅ্যাপ: 01317316865</a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Why Choose Us -->
-
-<section class="why">
-
-<h2>⭐ Why Choose YourChoice?</h2>
-
-<div class="why-box">
-
-<div>
-<h3>🚚 Fast Delivery</h3>
-<p>Quick delivery all over Bangladesh.</p>
-</div>
-
-<div>
-<h3>💎 Premium Quality</h3>
-<p>Best quality fashion products.</p>
-</div>
-
-<div>
-<h3>💰 Best Price</h3>
-<p>Affordable price with trusted service.</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- Contact -->
-
-<section class="contact">
-
-<h2>📞 Contact Us</h2>
-
-<p><strong>Phone:</strong> 01317316865</p>
-
-<p><strong>Facebook:</strong> Coming Soon</p>
-
-<p><strong>Address:</strong> Coming Soon</p>
-
-<a href="https://wa.me/8801317316865">
-<button>💬 Order on WhatsApp</button>
-</a>
-
-</section>
-<!-- Customer Reviews -->
-<section class="reviews">
-
-<h2>⭐ Customer Reviews</h2>
-
-<div class="review-box">
-
-<div class="review">
-<p>⭐⭐⭐⭐⭐</p>
-<p>"অনেক ভালো কোয়ালিটির টি-শার্ট।"</p>
-<h4>- Rahim</h4>
-</div>
-
-<div class="review">
-<p>⭐⭐⭐⭐⭐</p>
-<p>"দ্রুত ডেলিভারি ও সুন্দর প্যাকেজিং।"</p>
-<h4>- Karima</h4>
-</div>
-
-<div class="review">
-<p>⭐⭐⭐⭐⭐</p>
-<p>"দাম অনুযায়ী অসাধারণ প্রোডাক্ট।"</p>
-<h4>- Fahim</h4>
-</div>
-
-</div>
-
-</section>
-
-<!-- Footer -->
 <footer>
-
-<h2>YourChoice</h2>
-
-<p>Premium Fashion Store in Bangladesh</p>
-
-<p>📞 01317316865</p>
-
-<p>© 2026 YourChoice. All Rights Reserved.</p>
-
+  <div class="logo"><span class="dot"></span>YourChoice</div>
+  <p>&copy; ২০২৬ YourChoice। সকল স্বত্ব সংরক্ষিত।</p>
 </footer>
 
+<a href="https://wa.me/8801317316865" class="wa-float" aria-label="WhatsApp এ যোগাযোগ করুন">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 003.85 1h.01A7.94 7.94 0 0020 12.06a7.85 7.85 0 00-2.4-5.74zm-5.55 12.2a6.6 6.6 0 01-3.36-.92l-.24-.14-2.5.65.67-2.44-.16-.25a6.6 6.6 0 1112.28-3.46 6.57 6.57 0 01-6.69 6.56zm3.6-4.92c-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.44.1-.13.2-.5.64-.62.77-.11.13-.23.14-.42.05a5.4 5.4 0 01-1.6-.99 6 6 0 01-1.1-1.37c-.12-.2 0-.3.09-.4.09-.1.2-.24.3-.36.1-.12.13-.2.2-.33.07-.14.03-.26-.02-.36-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.33h-.37c-.13 0-.34.05-.52.24-.18.2-.68.66-.68 1.6 0 .95.7 1.87.8 2 .1.13 1.37 2.1 3.33 2.94.46.2.83.32 1.11.4.47.15.9.13 1.24.08.38-.06 1.17-.48 1.33-.94.16-.46.16-.86.11-.94-.05-.08-.18-.13-.38-.23z"/></svg>
+</a>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()" aria-label="বন্ধ করুন">✕</button>
+    <div class="modal-visual" id="modalVisual"></div>
+    <span class="modal-cat" id="modalCat"></span>
+    <h3 id="modalName"></h3>
+    <p id="modalDesc"></p>
+    <a href="#" id="modalWa" class="btn btn-primary" target="_blank" style="width:100%;justify-content:center;">📱 হোয়াটসঅ্যাপে অর্ডার করুন</a>
+  </div>
+</div>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  const categoryData = {
+    men:   { label:'ছেলেদের পোশাক', gradient:'linear-gradient(160deg,#6C4AB6,#8B6FD9)', icon:'<path d="M16 8l8 6 8-6 6 6-6 6v22H14V20l-6-6 8-6z" fill="#fff"/>' },
+    women: { label:'মেয়েদের পোশাক', gradient:'linear-gradient(160deg,#FF6F59,#FF9B7F)', icon:'<path d="M18 6h12l3 10-5 2 4 24H14l4-24-5-2z" fill="#fff"/>' },
+    kids:  { label:'বাচ্চাদের পোশাক', gradient:'linear-gradient(160deg,#2F8F6E,#5FBF9B)', icon:'<path d="M18 10l6 4 6-4 4 5-4 4v16H18V19l-4-4 4-5z" fill="#fff"/>' }
+  };
+
+  function openModal(cat, name, img){
+    const data = categoryData[cat];
+    const overlay = document.getElementById('modalOverlay');
+    const card = overlay.querySelector('.modal-card');
+    const visual = document.getElementById('modalVisual');
+    document.getElementById('modalCat').textContent = data.label;
+    document.getElementById('modalName').textContent = name;
+    document.getElementById('modalDesc').textContent = 'ভালো মানের কাপড়ে তৈরি ' + name + '। রঙ ও সাইজের জন্য হোয়াটসঅ্যাপে যোগাযোগ করুন।';
+    if(img){
+      card.classList.add('photo');
+      visual.className = 'modal-visual photo';
+      visual.innerHTML = '<img src="'+img+'" alt="'+name+'">';
+    } else {
+      card.classList.remove('photo');
+      visual.className = 'modal-visual';
+      visual.style.background = data.gradient;
+      visual.innerHTML = '<svg viewBox="0 0 48 48" fill="none">' + data.icon + '</svg>';
+    }
+    document.getElementById('modalWa').href = 'https://wa.me/8801317316865?text=' + encodeURIComponent('আমি আগ্রহী: ' + name + ' (' + data.label + ')');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    const overlay = document.getElementById('modalOverlay');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+</script>
+
+</body>
+</html>

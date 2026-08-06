@@ -197,3 +197,117 @@ header{
     font-weight:bold;
     cursor:pointer;
 }
+/* WHY */
+.why{
+    padding:40px 20px;
+    background:#151515;
+    border-radius:18px;
+    margin:30px 15px;
+}
+
+.why h2{
+    color:#ffd700;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.why-box{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:18px;
+}
+
+.why-box div{
+    background:#222;
+    padding:18px;
+    border-radius:15px;
+    border:1px solid #333;
+}
+
+.why-box h3{
+    color:#ffd700;
+    margin-bottom:8px;
+}
+
+/* CONTACT */
+
+.contact{
+    margin:30px 15px;
+    background:#1a1a1a;
+    padding:25px;
+    border-radius:18px;
+    text-align:center;
+}
+
+.contact h2{
+    color:#ffd700;
+    margin-bottom:18px;
+}
+
+.contact p{
+    margin:10px 0;
+    color:#ddd;
+}
+
+.contact button{
+    margin-top:18px;
+    width:100%;
+    padding:14px;
+    background:#ffd700;
+    color:#000;
+    border:none;
+    border-radius:30px;
+    font-size:17px;
+    font-weight:bold;
+}
+
+/* REVIEWS */
+
+.reviews{
+    margin:35px 15px;
+}
+
+.reviews h2{
+    color:#ffd700;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.review{
+    background:#1f1f1f;
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:15px;
+}
+
+.review span{
+    color:#ffd700;
+    font-size:20px;
+}
+
+.review p{
+    margin:12px 0;
+    color:#eee;
+}
+
+.review h4{
+    color:#ffd700;
+}
+
+/* FOOTER */
+
+footer{
+    background:#111;
+    text-align:center;
+    padding:30px 20px;
+    margin-top:40px;
+}
+
+footer h2{
+    color:#ffd700;
+}
+
+footer p{
+    color:#bbb;
+    margin:8px 0;
+}
